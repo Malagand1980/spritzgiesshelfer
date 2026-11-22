@@ -1,12 +1,13 @@
 // Service Worker: macht die App offline nutzbar.
 // Bei jeder Änderung an index.html, fehler.json o. ä. die Versionsnummer erhöhen,
 // damit installierte Apps die neue Version laden.
-const VERSION = "v4";
+const VERSION = "v5";
 const CACHE = "spritzgiesshelfer-" + VERSION;
 const DATEIEN = [
   "./",
   "./index.html",
   "./fehler.json",
+  "./materialhinweise.js",
   "./manifest.webmanifest",
   "./icons/icon-192.png",
   "./icons/icon-512.png",

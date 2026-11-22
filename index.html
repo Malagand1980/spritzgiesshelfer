@@ -159,6 +159,24 @@
   .loesung.done .titel, .loesung.done .info { color: var(--done); text-decoration: line-through; }
   .loesung.done .rang { opacity: .5; }
 
+  .material-head { display: flex; justify-content: space-between; align-items: baseline; gap: 10px; flex-wrap: wrap; }
+  .material-head .chips { margin: 0; }
+  .materialien { list-style: none; margin: 0; padding: 0; display: grid; gap: 8px; }
+  .material {
+    border: 1px solid var(--line);
+    border-radius: 9px;
+    padding: 10px 14px;
+  }
+  .material.typisch { border-color: var(--mittel); }
+  .material-kopf { display: flex; align-items: baseline; gap: 8px; flex-wrap: wrap; }
+  .material-kuerzel { font-weight: 700; }
+  .material-name { color: var(--muted); font-size: 12.5px; }
+  .material .info { color: var(--text); font-size: 13.5px; margin-top: 3px; }
+  .material .steckbrief { color: var(--muted); font-size: 12.5px; margin-top: 4px; }
+  .typisch-tag { background: var(--mittel-soft); color: var(--mittel); }
+  .annahme-tag { background: var(--gering-soft); color: var(--gering); border: 1px dashed var(--gering); font-weight: 500; }
+  .material-fuss { color: var(--muted); font-size: 12.5px; margin: 8px 0 0; }
+
   .hinweis {
     margin-top: 24px;
     background: var(--bg);
@@ -198,6 +216,7 @@
   <main class="detail" id="detail"></main>
 </div>
 
+<script src="materialhinweise.js"></script>
 <script>
   // Fehlerdaten stehen in fehler.json und werden beim Start geladen.
   // Neue Fehler dort ergänzen – index.html muss dafür nicht geändert werden.
@@ -216,6 +235,16 @@
     try { localStorage.setItem("fehlerhelfer-erledigt", JSON.stringify(obj)); } catch {}
   }
   let erledigt = ladeErledigt();
+
+  // Gewählter Werkstoff für die Materialhinweise (nur im eigenen Browser gespeichert)
+  const MAT_LISTE = typeof MATERIALIEN === "object" ? Object.keys(MATERIALIEN) : [];
+  let material = (() => {
+    try { const m = localStorage.getItem("fehlerhelfer-material"); return MAT_LISTE.includes(m) ? m : "Alle"; } catch { return "Alle"; }
+  })();
+  function setzeMaterial(m) {
+    material = m;
+    try { localStorage.setItem("fehlerhelfer-material", m); } catch {}
+  }
 
   function renderChips() {
     $("chips").innerHTML = ["Alle", ...KATEGORIEN]
@@ -276,7 +305,41 @@
             <label class="check"><input type="checkbox" data-i="${i}"${done.includes(i) ? " checked" : ""}> probiert</label>
           </li>`).join("")}
       </ol>
+      ${materialhinweise(f.id)}
       ${grundregeln()}`;
+  }
+
+  function materialhinweise(id) {
+    const daten = typeof MATERIALHINWEISE === "object" ? MATERIALHINWEISE[id] : null;
+    if (!daten) return "";
+    const zeigen = MAT_LISTE.filter((m) => daten[m] && (material === "Alle" || material === m));
+    return `
+      <div class="material-head">
+        <h3>Materialhinweise</h3>
+        <div class="chips" id="mat-chips">
+          ${["Alle", ...MAT_LISTE].map((m) => `<button class="chip${m === material ? " active" : ""}" data-m="${esc(m)}">${esc(m)}</button>`).join("")}
+        </div>
+      </div>
+      <ul class="materialien">
+        ${zeigen.map((m) => {
+          const h = daten[m];
+          const info = MATERIALIEN[m];
+          return `
+          <li class="material${h.typisch ? " typisch" : ""}">
+            <div class="material-kopf">
+              <span class="material-kuerzel">${esc(m)}</span>
+              <span class="material-name">${esc(info.name)}</span>
+            </div>
+            <div class="info">${esc(h.text)}</div>
+            ${material === m ? `<div class="steckbrief">${esc(info.steckbrief)}</div>` : ""}
+            ${h.typisch || h.annahme ? `<div class="tags">
+              ${h.typisch ? `<span class="tag typisch-tag">besonders anfällig</span>` : ""}
+              ${h.annahme ? `<span class="tag annahme-tag">Annahme – bitte prüfen</span>` : ""}
+            </div>` : ""}
+          </li>`;
+        }).join("")}
+      </ul>
+      <p class="material-fuss">Allgemeine Erfahrungswerte für unverstärkte Standardtypen. Das Datenblatt des eingesetzten Materials hat immer Vorrang.</p>`;
   }
 
   function grundregeln() {
@@ -316,6 +379,8 @@
   });
   $("detail").addEventListener("click", (e) => {
     if (e.target.id === "back") zeige(null);
+    const m = e.target.closest("#mat-chips .chip")?.dataset.m;
+    if (m) { setzeMaterial(m); renderDetail(); }
     if (e.target.id === "reset") { delete erledigt[state.aktiv]; speichereErledigt(erledigt); renderDetail(); }
   });
   $("detail").addEventListener("change", (e) => {
