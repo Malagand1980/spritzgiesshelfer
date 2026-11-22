@@ -157,4 +157,48 @@ const MATERIALHINWEISE = {
     POM: { text: "Starke Nachschwindung über Tage. Maße frühestens nach 24–48 h messen. Höhere Werkzeugtemperatur verringert die Nachschwindung.", typisch: true, annahme: true },
     PP: { text: "Hohe Schwindung, stark abhängig von Nachdruck und Werkzeugtemperatur. Maße erst nach ca. 24 h prüfen.", typisch: true, annahme: true },
   },
+
+  // Einträge für die neuen Fehler aus PR #2 (werden angezeigt, sobald die Fehler in fehler.json stehen)
+  "orangenhaut": {
+    PA: { text: "Bei Glasfaser-PA kommt die Welligkeit oft von Fasern direkt unter der Oberfläche. Höhere Werkzeugtemperatur und schnellere Füllung helfen." },
+    PC: { text: "Auf Hochglanzflächen sehr auffällig. Werkzeugtemperatur erhöhen, damit die Schmelze die Werkzeugoberfläche sauber abformt.", typisch: true },
+    POM: { text: "Bei niedriger Werkzeugtemperatur möglich. Werkzeugtemperatur auf ca. 90 °C anheben.", annahme: true },
+    PP: { text: "Bei talkumgefüllten Typen häufiger. Nachdruck und Werkzeugtemperatur erhöhen.", annahme: true },
+  },
+  "mikrorisse": {
+    PA: { text: "Frisch gespritzt (trocken) am rissanfälligsten. Risse an Einlegeteilen: Einlegeteile vorwärmen, Teile ggf. konditionieren." },
+    PC: { text: "Sehr anfällig, besonders an Schraubdomen und Einlegeteilen. Hohe Werkzeugtemperatur, Einlegeteile vorwärmen, Kontakt mit Ölen oder Reinigern prüfen, ggf. Tempern.", typisch: true },
+    POM: { text: "Eher selten. Bei Einlegeteilen auf Schwindung auf das Metall achten, Einlegeteile vorwärmen." },
+    PP: { text: "Echte Spannungsrisse selten. Feine weiße Linien sind meist Weißbruch durch Verformung beim Entformen." },
+  },
+  "fadenziehen": {
+    PA: { text: "Sehr typisch wegen der dünnflüssigen Schmelze. Düsentemperatur senken, Dekompression erhöhen, Verschlussdüse einsetzen.", typisch: true },
+    PC: { text: "Selten, da zähfließend. Eher kalter Pfropfen als Fadenziehen." },
+    POM: { text: "Gelegentlich. Düsentemperatur nicht zu hoch, Dekompression nur so weit wie nötig (sonst Lufteinzug)." },
+    PP: { text: "Typisch bei hoher Massetemperatur. Düsentemperatur senken, Dekompression erhöhen, Abhebeweg der Düse prüfen.", typisch: true },
+  },
+  "mahlgut-schlieren": {
+    PA: { text: "Mahlgut nimmt schneller Feuchte auf als Neuware. Mahlgut immer mit trocknen und Anteil begrenzen (ca. 20–30 %).", typisch: true, annahme: true },
+    PC: { text: "Mahlgut gründlich trocknen, Mehrfachverarbeitung macht PC spröde. Anteil begrenzen und Staubanteil absieben.", typisch: true },
+    POM: { text: "Mehrfach verarbeitetes POM ist thermisch vorgeschädigt und gast stärker aus. Anteil begrenzen, nur sauberes, sortenreines Mahlgut verwenden." },
+    PP: { text: "Feuchte ist selten die Ursache. Eher Staub- oder Feinanteil im Mahlgut und Lufteinzug – Mahlgut absieben, Staudruck erhöhen." },
+  },
+  "glasfasern-oberflaeche": {
+    PA: { text: "Häufigster Fall (PA-GF). Werkzeugtemperatur deutlich erhöhen (ca. 80–100 °C), schneller einspritzen.", typisch: true, annahme: true },
+    PC: { text: "PC-GF selten im Einsatz, gleiche Maßnahmen wie bei PA-GF: warmes Werkzeug, schnelle Füllung." },
+    POM: { text: "POM-GF nur bei technischen Teilen, wenig verbreitet. Warmes Werkzeug hilft auch hier.", annahme: true },
+    PP: { text: "Bei PP-GF typisch. Werkzeugtemperatur erhöhen, Fasern bleiben bei PP aber meist sichtbarer als bei PA.", typisch: true },
+  },
+  "anschnittmarkierung": {
+    PA: { text: "Durch hohe Scherung am Anschnitt. Anfangsgeschwindigkeit im Einspritzprofil senken." },
+    PC: { text: "Sehr auffällig als matter Hof. Langsamer Start, Anschnitt vergrößern, Werkzeugtemperatur erhöhen.", typisch: true },
+    POM: { text: "Matter Hof bzw. Flecken am Anschnitt sind bei POM sehr typisch. Langsam anspritzen, Anschnitt vergrößern.", typisch: true },
+    PP: { text: "Meist unkritisch. Einspritzprofil am Start absenken." },
+  },
+  "dosierprobleme": {
+    PA: { text: "Zu warme Einzugszone lässt Granulat anschmelzen. Einzugszone kühler einstellen, Restfeuchte prüfen." },
+    PC: { text: "Hohe Viskosität braucht viel Drehmoment. Temperaturprofil ansteigend wählen, Schneckendrehzahl nicht zu hoch." },
+    POM: { text: "Bei zu hoher Einzugstemperatur rutscht das Granulat. Einzugszone kühl halten, Staudruck moderat." },
+    PP: { text: "Rutscht leicht in der Einzugszone (glattes Granulat). Einzugstemperatur anpassen, Staudruck leicht erhöhen.", typisch: true, annahme: true },
+  },
 };
