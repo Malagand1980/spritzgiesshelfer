@@ -1,0 +1,800 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#1f5fbf">
+<meta name="description" content="Häufige Fehler im Spritzgießen – Lösungen nach Wirksamkeit sortiert.">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" type="image/png" href="icons/icon-192.png">
+<link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="Spritzgießhelfer">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<title>Marcel’s Spritzgießhelfer</title>
+<style>
+  :root {
+    --bg: #f4f5f7;
+    --panel: #ffffff;
+    --text: #1d2330;
+    --muted: #5c6577;
+    --line: #dde1e8;
+    --accent: #1f5fbf;
+    --accent-soft: #e6eefb;
+    --hoch: #1b7f4b;
+    --hoch-soft: #e2f4ea;
+    --mittel: #a3660a;
+    --mittel-soft: #fbf0dc;
+    --gering: #6b7280;
+    --gering-soft: #eef0f3;
+    --done: #9aa3b2;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #13161c;
+      --panel: #1c2028;
+      --text: #e6e9ef;
+      --muted: #9aa3b2;
+      --line: #2e3440;
+      --accent: #6aa3ff;
+      --accent-soft: #1f2b40;
+      --hoch: #5fd394;
+      --hoch-soft: #173326;
+      --mittel: #f0b453;
+      --mittel-soft: #3a2e17;
+      --gering: #a0a8b6;
+      --gering-soft: #2a2f38;
+      --done: #5c6577;
+    }
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--text);
+    font: 15px/1.5 system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  }
+  header {
+    background: var(--panel);
+    border-bottom: 1px solid var(--line);
+    padding: 14px 20px;
+    padding-top: max(14px, env(safe-area-inset-top));
+  }
+  header h1 { margin: 0; font-size: 20px; }
+  header p { margin: 2px 0 0; color: var(--muted); font-size: 13px; }
+
+  .layout {
+    display: grid;
+    grid-template-columns: 340px 1fr;
+    gap: 16px;
+    padding: 16px 20px;
+    max-width: 1280px;
+    margin: 0 auto;
+  }
+  .sidebar, .detail {
+    background: var(--panel);
+    border: 1px solid var(--line);
+    border-radius: 10px;
+  }
+  .sidebar { padding: 12px; align-self: start; position: sticky; top: 16px; max-height: calc(100vh - 32px); display: flex; flex-direction: column; }
+  .search {
+    width: 100%;
+    padding: 9px 12px;
+    font: inherit;
+    border: 1px solid var(--line);
+    border-radius: 8px;
+    background: var(--bg);
+    color: var(--text);
+  }
+  .search:focus { outline: 2px solid var(--accent); outline-offset: -1px; }
+  .chips { display: flex; flex-wrap: wrap; gap: 6px; margin: 10px 0; }
+  .chip {
+    border: 1px solid var(--line);
+    background: transparent;
+    color: var(--muted);
+    border-radius: 999px;
+    padding: 3px 10px;
+    font: inherit;
+    font-size: 12px;
+    cursor: pointer;
+  }
+  .chip.active { background: var(--accent); border-color: var(--accent); color: #fff; }
+  .list { list-style: none; margin: 0; padding: 0; overflow-y: auto; }
+  .list button {
+    width: 100%;
+    text-align: left;
+    border: 0;
+    background: transparent;
+    color: var(--text);
+    font: inherit;
+    padding: 9px 10px;
+    border-radius: 7px;
+    cursor: pointer;
+    display: block;
+  }
+  .list button:hover { background: var(--bg); }
+  .list button.active { background: var(--accent-soft); color: var(--accent); font-weight: 600; }
+  .list small { display: block; color: var(--muted); font-size: 12px; font-weight: 400; }
+  .empty { color: var(--muted); padding: 10px; font-size: 13px; }
+
+  .detail { padding: 22px 26px; min-width: 0; }
+  .back { display: none; }
+  .kat { color: var(--accent); font-size: 12px; font-weight: 600; text-transform: uppercase; letter-spacing: .04em; }
+  .detail h2 { margin: 2px 0 4px; font-size: 24px; }
+  .alias { color: var(--muted); font-size: 13px; margin-bottom: 12px; }
+  .detail h3 { font-size: 15px; margin: 22px 0 8px; }
+  .ursachen { margin: 0; padding-left: 20px; color: var(--muted); }
+
+  .loesungen-head { display: flex; justify-content: space-between; align-items: baseline; gap: 10px; flex-wrap: wrap; }
+  .reset { border: 0; background: none; color: var(--accent); cursor: pointer; font: inherit; font-size: 13px; padding: 0; }
+  .loesungen { list-style: none; margin: 0; padding: 0; display: grid; gap: 8px; }
+  .loesung {
+    display: grid;
+    grid-template-columns: 34px 1fr auto;
+    gap: 12px;
+    align-items: start;
+    border: 1px solid var(--line);
+    border-radius: 9px;
+    padding: 12px 14px;
+  }
+  .rang {
+    width: 30px; height: 30px; border-radius: 50%;
+    display: grid; place-items: center;
+    font-weight: 700; font-size: 14px;
+    background: var(--accent-soft); color: var(--accent);
+  }
+  .loesung:first-child { border-color: var(--hoch); }
+  .loesung:first-child .rang { background: var(--hoch); color: #fff; }
+  .loesung .titel { font-weight: 600; }
+  .loesung .info { color: var(--muted); font-size: 13.5px; margin-top: 2px; }
+  .tags { display: flex; gap: 6px; margin-top: 6px; flex-wrap: wrap; }
+  .tag { font-size: 11.5px; padding: 1px 8px; border-radius: 999px; font-weight: 600; }
+  .w-hoch { background: var(--hoch-soft); color: var(--hoch); }
+  .w-mittel { background: var(--mittel-soft); color: var(--mittel); }
+  .w-gering { background: var(--gering-soft); color: var(--gering); }
+  .art { background: var(--bg); color: var(--muted); font-weight: 500; border: 1px solid var(--line); }
+  .check { display: flex; align-items: center; gap: 5px; font-size: 12px; color: var(--muted); cursor: pointer; white-space: nowrap; }
+  .check input { width: 16px; height: 16px; accent-color: var(--accent); }
+  .loesung.done .titel, .loesung.done .info { color: var(--done); text-decoration: line-through; }
+  .loesung.done .rang { opacity: .5; }
+
+  .hinweis {
+    margin-top: 24px;
+    background: var(--bg);
+    border-radius: 9px;
+    padding: 12px 16px;
+    font-size: 13px;
+    color: var(--muted);
+  }
+  .hinweis strong { color: var(--text); }
+  .hinweis ul { margin: 6px 0 0; padding-left: 18px; }
+
+  @media (max-width: 800px) {
+    header { padding: 12px 16px; padding-top: max(12px, env(safe-area-inset-top)); }
+    .layout { grid-template-columns: 1fr; padding: 12px 16px; padding-bottom: max(12px, env(safe-area-inset-bottom)); }
+    .sidebar { position: static; max-height: none; }
+    .layout.show-detail .sidebar { display: none; }
+    .layout:not(.show-detail) .detail { display: none; }
+    .back { display: inline-block; border: 0; background: none; color: var(--accent); font: inherit; padding: 0; margin-bottom: 10px; cursor: pointer; }
+    .detail { padding: 16px; }
+    .loesung { grid-template-columns: 30px 1fr; }
+    .loesung .check { grid-column: 2; }
+  }
+</style>
+</head>
+<body>
+<header>
+  <h1>Marcel’s Spritzgießhelfer</h1>
+  <p>Häufige Fehler im Spritzgießen – Lösungen nach Wirksamkeit sortiert, die wirksamste zuerst.</p>
+</header>
+
+<div class="layout" id="layout">
+  <aside class="sidebar">
+    <input class="search" id="search" type="search" placeholder="Fehler suchen, z. B. Grat, Schlieren …" autocomplete="off">
+    <div class="chips" id="chips"></div>
+    <ul class="list" id="list"></ul>
+  </aside>
+  <main class="detail" id="detail"></main>
+</div>
+
+<script>
+// Fehlerdatenbank Spritzgießen
+// Lösungen sind nach Wirksamkeit sortiert: die wirksamste Maßnahme steht oben.
+// wirkung: "hoch" | "mittel" | "gering"
+// art: "Prozess" | "Material" | "Werkzeug" | "Maschine" | "Konstruktion"
+
+const KATEGORIEN = [
+  "Füllung & Maß",
+  "Oberfläche",
+  "Struktur & Festigkeit",
+  "Verfärbung & Verunreinigung",
+  "Entformung",
+];
+
+const FEHLER = [
+  {
+    id: "unvollstaendige-fuellung",
+    name: "Unvollständige Füllung",
+    alias: ["Füllmangel", "Short Shot", "nicht ausgespritzt"],
+    kategorie: "Füllung & Maß",
+    beschreibung:
+      "Das Formteil ist nicht vollständig ausgeformt – meist an Fließwegenden, dünnen Rippen oder weit vom Anschnitt entfernten Bereichen.",
+    ursachen: [
+      "Zu wenig Material dosiert / kein Massepolster",
+      "Einspritzdruck oder -geschwindigkeit zu niedrig",
+      "Masse kühlt zu früh ab (Masse- oder Werkzeugtemperatur zu niedrig)",
+      "Luft kann nicht entweichen (Entlüftung verstopft)",
+      "Undichte Rückstromsperre",
+      "Anschnitt oder Fließquerschnitte zu klein",
+    ],
+    loesungen: [
+      { massnahme: "Dosierweg erhöhen, Massepolster sicherstellen", detail: "Restmassepolster von ca. 3–5 mm (bzw. 5–10 % des Dosierwegs) einstellen. Ohne Polster wirkt kein Druck.", wirkung: "hoch", art: "Prozess" },
+      { massnahme: "Einspritzgeschwindigkeit erhöhen", detail: "Schnelleres Füllen verhindert vorzeitiges Einfrieren der Fließfront.", wirkung: "hoch", art: "Prozess" },
+      { massnahme: "Einspritzdruck / Druckbegrenzung erhöhen", detail: "Prüfen, ob die Maschine an der Druckgrenze läuft – dann reicht der Druck nicht für die eingestellte Geschwindigkeit.", wirkung: "hoch", art: "Prozess" },
+      { massnahme: "Massetemperatur erhöhen", detail: "In 5–10 °C-Schritten im zulässigen Verarbeitungsfenster laut Datenblatt.", wirkung: "mittel", art: "Prozess" },
+      { massnahme: "Werkzeugtemperatur erhöhen", detail: "Verlängert die Fließfähigkeit der Masse im Werkzeug.", wirkung: "mittel", art: "Prozess" },
+      { massnahme: "Entlüftung prüfen und reinigen", detail: "Entlüftungskanäle am Fließwegende freilegen bzw. ergänzen.", wirkung: "mittel", art: "Werkzeug" },
+      { massnahme: "Rückstromsperre prüfen", detail: "Schwankt das Massepolster oder läuft es auf 0, ist die Rückstromsperre oft verschlissen.", wirkung: "mittel", art: "Maschine" },
+      { massnahme: "Anschnitt / Angusskanäle vergrößern", detail: "Werkzeugänderung – erst, wenn Prozessmaßnahmen ausgeschöpft sind.", wirkung: "gering", art: "Werkzeug" },
+    ],
+  },
+  {
+    id: "einfallstellen",
+    name: "Einfallstellen",
+    alias: ["Sink Marks", "Einsenkungen"],
+    kategorie: "Füllung & Maß",
+    beschreibung:
+      "Muldenförmige Vertiefungen an der Oberfläche, typischerweise gegenüber von Rippen, Domen oder an dickwandigen Stellen.",
+    ursachen: [
+      "Volumenschwindung wird nicht durch Nachdruck ausgeglichen",
+      "Nachdruck zu niedrig oder zu kurz",
+      "Anschnitt friert zu früh ein",
+      "Materialanhäufungen / ungleichmäßige Wanddicken",
+      "Zu hohe Temperatur an der betroffenen Stelle",
+    ],
+    loesungen: [
+      { massnahme: "Nachdruck erhöhen", detail: "Wirksamste Stellgröße gegen Schwindung. In Schritten von ca. 50–100 bar erhöhen.", wirkung: "hoch", art: "Prozess" },
+      { massnahme: "Nachdruckzeit verlängern", detail: "Bis zum Siegelpunkt (Anschnitt eingefroren) – per Gewichtsreihe ermitteln: Zeit erhöhen, bis das Teilegewicht konstant bleibt.", wirkung: "hoch", art: "Prozess" },
+      { massnahme: "Massepolster sicherstellen", detail: "Ohne Polster kann der Nachdruck nicht wirken.", wirkung: "hoch", art: "Prozess" },
+      { massnahme: "Werkzeugtemperatur an der Einfallstelle senken", detail: "Gezielte Kühlung der betroffenen Seite bildet schneller eine tragfähige Randschicht.", wirkung: "mittel", art: "Prozess" },
+      { massnahme: "Massetemperatur senken", detail: "Weniger Volumenschwindung beim Abkühlen.", wirkung: "mittel", art: "Prozess" },
+      { massnahme: "Kühlzeit verlängern", detail: "Verhindert Nachschwinden nach dem Entformen.", wirkung: "gering", art: "Prozess" },
+      { massnahme: "Anschnitt vergrößern oder an die dickwandige Stelle verlegen", detail: "Nachdruck erreicht dickwandige Bereiche länger.", wirkung: "mittel", art: "Werkzeug" },
+      { massnahme: "Konstruktion: Wanddicken vergleichmäßigen", detail: "Rippen max. 0,5–0,7 × Grundwanddicke, Materialanhäufungen auskernen.", wirkung: "hoch", art: "Konstruktion" },
+    ],
+  },
+  {
+    id: "lunker",
+    name: "Lunker / Vakuolen",
+    alias: ["Hohlräume", "Vakuum-Blasen", "Voids"],
+    kategorie: "Struktur & Festigkeit",
+    beschreibung:
+      "Hohlräume im Inneren dickwandiger Bereiche, bei transparenten Teilen sichtbar. Entstehen, wenn die Randschicht schon steif ist und das Innere beim Schwinden abreißt.",
+    ursachen: [
+      "Nachdruck zu niedrig oder zu kurz",
+      "Anschnitt friert zu früh ein",
+      "Dickwandige Bereiche / Materialanhäufungen",
+      "Werkzeugtemperatur zu niedrig (Randschicht zu früh steif)",
+    ],
+    loesungen: [
+      { massnahme: "Nachdruck und Nachdruckzeit erhöhen", detail: "Mehr Material in die Kavität fördern, solange der Anschnitt offen ist.", wirkung: "hoch", art: "Prozess" },
+      { massnahme: "Massepolster sicherstellen", detail: "Polster muss während der gesamten Nachdruckphase erhalten bleiben.", wirkung: "hoch", art: "Prozess" },
+      { massnahme: "Werkzeugtemperatur erhöhen", detail: "Randschicht bleibt nachgiebig, Schwindung zeigt sich eher als Einfallstelle statt als innerer Lunker.", wirkung: "mittel", art: "Prozess" },
+      { massnahme: "Einspritzgeschwindigkeit reduzieren", detail: "Weniger eingeschlossene Luft und geringere Scherung.", wirkung: "mittel", art: "Prozess" },
+      { massnahme: "Massetemperatur senken", detail: "Geringere Volumenschwindung.", wirkung: "gering", art: "Prozess" },
+      { massnahme: "Anschnitt vergrößern / an dickste Stelle legen", detail: "Längere Siegelzeit, Nachdruck wirkt länger.", wirkung: "mittel", art: "Werkzeug" },
+      { massnahme: "Konstruktion: Materialanhäufungen vermeiden", detail: "Dickwandige Stellen auskernen.", wirkung: "hoch", art: "Konstruktion" },
+    ],
+  },
+  {
+    id: "gratbildung",
+    name: "Gratbildung",
+    alias: ["Schwimmhaut", "Flash", "Überspritzung"],
+    kategorie: "Füllung & Maß",
+    beschreibung:
+      "Dünne Kunststoffhaut an Trennebene, Auswerfern, Schiebern oder Einsätzen, wo Masse in Spalte eindringt.",
+    ursachen: [
+      "Umschaltung auf Nachdruck zu spät (Werkzeug wird überspritzt)",
+      "Nachdruck zu hoch",
+      "Schließkraft zu gering",
+      "Masse zu dünnflüssig (Temperatur zu hoch)",
+      "Werkzeug verschlissen, verschmutzt oder beschädigt",
+    ],
+    loesungen: [
+      { massnahme: "Umschaltpunkt früher setzen", detail: "Umschalten bei ca. 95–98 % volumetrischer Füllung. Füllstudie machen.", wirkung: "hoch", art: "Prozess" },
+      { massnahme: "Nachdruck reduzieren", detail: "Schrittweise senken, bis der Grat verschwindet – auf Einfallstellen achten.", wirkung: "hoch", art: "Prozess" },
+      { massnahme: "Trennebene reinigen und prüfen", detail: "Fremdkörper, Materialreste oder Beschädigungen an der Trennebene entfernen.", wirkung: "hoch", art: "Werkzeug" },
+      { massnahme: "Schließkraft prüfen / erhöhen", detail: "Benötigte Schließkraft ≈ projizierte Fläche × Werkzeuginnendruck. Nicht überdimensionieren (verschließt Entlüftung).", wirkung: "mittel", art: "Maschine" },
+      { massnahme: "Einspritzgeschwindigkeit reduzieren", detail: "Geringerer Druckspitzenwert am Ende der Füllung.", wirkung: "mittel", art: "Prozess" },
+      { massnahme: "Massetemperatur senken", detail: "Höhere Viskosität – Masse dringt weniger in Spalte ein.", wirkung: "mittel", art: "Prozess" },
+      { massnahme: "Werkzeugtemperatur senken", detail: "Masse friert in Spalten schneller ein.", wirkung: "gering", art: "Prozess" },
+      { massnahme: "Werkzeug nacharbeiten", detail: "Trennebene tuschieren, Passungen von Auswerfern/Schiebern erneuern.", wirkung: "hoch", art: "Werkzeug" },
+    ],
+  },
+  {
+    id: "feuchtigkeitsschlieren",
+    name: "Feuchtigkeitsschlieren",
+    alias: ["Silberschlieren", "Splay", "Wasserschlieren"],
+    kategorie: "Oberfläche",
+    beschreibung:
+      "Silbrig glänzende, U-förmig in Fließrichtung geöffnete Schlieren, oft mit aufgerissener Oberfläche. Ursache ist verdampfende Feuchtigkeit.",
+    ursachen: [
+      "Granulat nicht oder falsch getrocknet",
+      "Trockner defekt (Taupunkt zu hoch)",
+      "Granulat nimmt nach dem Trocknen wieder Feuchtigkeit auf",
+      "Kondenswasser auf der Werkzeugoberfläche",
+    ],
+    loesungen: [
+      { massnahme: "Granulat korrekt trocknen", detail: "Trocknungstemperatur und -zeit laut Datenblatt (z. B. PA 80 °C / 4 h, PC 120 °C / 4 h, PET 160 °C / 4 h).", wirkung: "hoch", art: "Material" },
+      { massnahme: "Restfeuchte messen", detail: "Mit Feuchtemessgerät prüfen, ob der Grenzwert laut Datenblatt eingehalten wird.", wirkung: "hoch", art: "Material" },
+      { massnahme: "Trockner prüfen", detail: "Taupunkt (≤ −30 °C bei Trockenlufttrocknern), Trockenmittel, Filter und Luftdurchsatz kontrollieren.", wirkung: "hoch", art: "Maschine" },
+      { massnahme: "Verweilzeit im Trockentrichter sicherstellen", detail: "Trichtergröße muss Durchsatz × Trocknungszeit abdecken.", wirkung: "mittel", art: "Maschine" },
+      { massnahme: "Feuchteaufnahme nach dem Trocknen verhindern", detail: "Geschlossene Förderung, Zwischenbehälter vermeiden, kaltes Material vor dem Öffnen akklimatisieren.", wirkung: "mittel", art: "Material" },
+      { massnahme: "Werkzeug auf Kondenswasser / Leckagen prüfen", detail: "Werkzeugtemperatur über Taupunkt der Hallenluft halten, Temperierkreise auf Dichtheit prüfen.", wirkung: "mittel", art: "Werkzeug" },
+      { massnahme: "Staudruck leicht erhöhen", detail: "Unterstützt die Entgasung – ersetzt keine Trocknung.", wirkung: "gering", art: "Prozess" },
+    ],
+  },
+  {
+    id: "verbrennungsschlieren",
+    name: "Verbrennungsschlieren",
+    alias: ["Braune Schlieren", "thermische Schädigung", "Zersetzung"],
+    kategorie: "Verfärbung & Verunreinigung",
+    beschreibung:
+      "Bräunliche bis silbrige Schlieren durch thermisch geschädigtes Material, oft periodisch auftretend.",
+    ursachen: [
+      "Massetemperatur zu hoch",
+      "Verweilzeit im Zylinder zu lang",
+      "Zu hohe Scherung (Drehzahl, Staudruck, Einspritzgeschwindigkeit)",
+      "Totstellen in Düse oder Heißkanal",
+    ],
+    loesungen: [
+      { massnahme: "Massetemperatur senken", detail: "Zylinderzonen in 5–10 °C-Schritten absenken, auch Düse und Heißkanal prüfen.", wirkung: "hoch", art: "Prozess" },
+      { massnahme: "Verweilzeit verkürzen", detail: "Schussgewicht sollte 20–80 % der Zylinderkapazität betragen. Ggf. kleineren Zylinder einsetzen.", wirkung: "hoch", art: "Maschine" },
+      { massnahme: "Schneckendrehzahl reduzieren", detail: "Weniger Friktionswärme. Dosierzeit darf die Kühlzeit ausnutzen.", wirkung: "mittel", art: "Prozess" },
+      { massnahme: "Staudruck reduzieren", detail: "Senkt Scherung und Friktionswärme.", wirkung: "mittel", art: "Prozess" },
+      { massnahme: "Einspritzgeschwindigkeit reduzieren", detail: "Weniger Scherung an engen Querschnitten (Anschnitt).", wirkung: "mittel", art: "Prozess" },
+      { massnahme: "Totstellen beseitigen", detail: "Düse, Rückstromsperre und Heißkanal auf Ablagerungen und Toträume prüfen.", wirkung: "mittel", art: "Werkzeug" },
+      { massnahme: "Anschnitt vergrößern", detail: "Reduziert Scherwärme am Anschnitt.", wirkung: "gering", art: "Werkzeug" },
+    ],
+  },
+  {
+    id: "dieseleffekt",
+    name: "Dieseleffekt / Brandstellen",
+    alias: ["Verbrennungen", "Brenner", "schwarze Stellen am Fließende"],
+    kategorie: "Verfärbung & Verunreinigung",
+    beschreibung:
+      "Schwarz-braune Verbrennungen an Fließwegenden oder Sacklöchern. Eingeschlossene Luft wird komprimiert, erhitzt sich stark und verbrennt das Material.",
+    ursachen: [
+      "Unzureichende oder verstopfte Entlüftung",
+      "Einspritzgeschwindigkeit zu hoch",
+      "Luftfallen durch Teilegeometrie oder Fließfrontverlauf",
+    ],
+    loesungen: [
+      { massnahme: "Entlüftung reinigen bzw. ergänzen", detail: "Entlüftungstiefe je nach Material ca. 0,01–0,03 mm (PA/POM dünner, PC/ABS bis 0,04 mm).", wirkung: "hoch", art: "Werkzeug" },
+      { massnahme: "Einspritzgeschwindigkeit am Füllende reduzieren", detail: "Geschwindigkeitsprofil: zum Ende der Füllung abbremsen, damit Luft entweichen kann.", wirkung: "hoch", art: "Prozess" },
+      { massnahme: "Schließkraft reduzieren", detail: "Nur so weit, dass kein Grat entsteht – Trennebene entlüftet dann besser.", wirkung: "mittel", art: "Maschine" },
+      { massnahme: "Massetemperatur senken", detail: "Geringere Temperaturbelastung des Materials.", wirkung: "gering", art: "Prozess" },
+      { massnahme: "Vakuumentlüftung einsetzen", detail: "Kavität wird vor dem Einspritzen evakuiert – bei hartnäckigen Luftfallen.", wirkung: "hoch", art: "Werkzeug" },
+      { massnahme: "Anschnittlage ändern / Entlüftungseinsätze", detail: "Fließfrontverlauf so ändern, dass Luft zu Entlüftungen geschoben wird; Sinter-Entlüftungseinsätze an Luftfallen.", wirkung: "mittel", art: "Werkzeug" },
+    ],
+  },
+  {
+    id: "bindenaehte",
+    name: "Bindenähte",
+    alias: ["Fließnähte", "Weld Lines", "Zusammenflusslinien"],
+    kategorie: "Struktur & Festigkeit",
+    beschreibung:
+      "Sichtbare Linien und mechanische Schwachstellen dort, wo zwei Fließfronten zusammentreffen (z. B. hinter Durchbrüchen oder bei mehreren Anschnitten).",
+    ursachen: [
+      "Fließfronten zu kalt beim Zusammentreffen",
+      "Eingeschlossene Luft im Bindenahtbereich",
+      "Zu geringer Druck an der Bindenaht",
+    ],
+    loesungen: [
+      { massnahme: "Werkzeugtemperatur erhöhen", detail: "Wirksamste Maßnahme für Optik und Festigkeit. Bei hohen Anforderungen variotherme Temperierung.", wirkung: "hoch", art: "Prozess" },
+      { massnahme: "Massetemperatur erhöhen", detail: "Fließfronten verschmelzen besser.", wirkung: "hoch", art: "Prozess" },
+      { massnahme: "Einspritzgeschwindigkeit erhöhen", detail: "Fronten treffen wärmer aufeinander.", wirkung: "mittel", art: "Prozess" },
+      { massnahme: "Entlüftung im Bindenahtbereich", detail: "Eingeschlossene Luft verhindert das Verschweißen.", wirkung: "mittel", art: "Werkzeug" },
+      { massnahme: "Nachdruck erhöhen", detail: "Presst die Fronten stärker zusammen.", wirkung: "mittel", art: "Prozess" },
+      { massnahme: "Anschnitt verlegen / Überlaufkavität", detail: "Bindenaht in unkritischen Bereich verschieben oder kalte Front in einen Überlauf leiten.", wirkung: "mittel", art: "Werkzeug" },
+    ],
+  },
+  {
+    id: "freistrahl",
+    name: "Freistrahlbildung",
+    alias: ["Jetting", "Schlangenlinien"],
+    kategorie: "Oberfläche",
+    beschreibung:
+      "Wurmartige, schlangenförmige Strukturen an der Oberfläche, ausgehend vom Anschnitt. Die Masse schießt als freier Strahl in die Kavität, statt sich gleichmäßig auszubreiten.",
+    ursachen: [
+      "Einspritzgeschwindigkeit am Anfang zu hoch",
+      "Anschnitt zu klein bzw. ungünstig positioniert (Strahl trifft nicht auf eine Wand)",
+      "Masse zu kalt",
+    ],
+    loesungen: [
+      { massnahme: "Einspritzgeschwindigkeit zu Beginn stark reduzieren", detail: "Geschwindigkeitsprofil: langsam anfahren, bis sich am Anschnitt eine Quellfront gebildet hat, dann beschleunigen.", wirkung: "hoch", art: "Prozess" },
+      { massnahme: "Anschnitt so legen, dass die Masse auf eine Wand / einen Kern trifft", detail: "Anschnitt gegen eine Wand richten (Prallanschnitt) oder Überlappungsanschnitt verwenden.", wirkung: "hoch", art: "Werkzeug" },
+      { massnahme: "Anschnitt vergrößern", detail: "Geringere Austrittsgeschwindigkeit.", wirkung: "mittel", art: "Werkzeug" },
+      { massnahme: "Massetemperatur erhöhen", detail: "Strahl verbindet sich besser mit der nachfolgenden Masse.", wirkung: "gering", art: "Prozess" },
+      { massnahme: "Werkzeugtemperatur erhöhen", detail: "Verringert die Sichtbarkeit der Strukturen.", wirkung: "gering", art: "Prozess" },
+    ],
+  },
+  {
+    id: "verzug",
+    name: "Verzug",
+    alias: ["Verwerfung", "Warpage", "Verbiegen"],
+    kategorie: "Füllung & Maß",
+    beschreibung:
+      "Das Formteil verformt sich nach dem Entformen (krumm, verdreht, nicht eben) durch ungleichmäßige Schwindung.",
+    ursachen: [
+      "Unterschiedliche Werkzeugtemperaturen (Düsen- vs. Auswerferseite)",
+      "Ungleichmäßige Wanddicken",
+      "Faserorientierung bei verstärkten Materialien",
+      "Ungleichmäßiger Nachdruck über das Teil",
+      "Entformung zu früh (Teil noch zu warm)",
+    ],
+    loesungen: [
+      { massnahme: "Werkzeugtemperaturen anpassen", detail: "Seiten angleichen bzw. gezielt differenzieren: Teil biegt sich zur wärmeren Seite – diese kühler fahren.", wirkung: "hoch", art: "Prozess" },
+      { massnahme: "Nachdruck optimieren", detail: "Nachdruckhöhe und -profil anpassen (oft fallendes Nachdruckprofil), um Schwindung zu vergleichmäßigen.", wirkung: "hoch", art: "Prozess" },
+      { massnahme: "Kühlzeit verlängern", detail: "Teil wird formstabiler entformt.", wirkung: "mittel", art: "Prozess" },
+      { massnahme: "Temperierung im Werkzeug verbessern", detail: "Kühlkanäle gleichmäßiger anordnen, Hotspots (Kerne, Ecken) gezielt kühlen.", wirkung: "hoch", art: "Werkzeug" },
+      { massnahme: "Anschnittlage ändern", detail: "Steuert Fließ- und Faserorientierung.", wirkung: "mittel", art: "Werkzeug" },
+      { massnahme: "Konstruktion: gleichmäßige Wanddicken, Versteifungsrippen", detail: "Größter Hebel bei konstruktiv bedingtem Verzug.", wirkung: "hoch", art: "Konstruktion" },
+      { massnahme: "Abkühllehre / Tempern", detail: "Teil nach dem Entformen in einer Vorrichtung abkühlen lassen – Notlösung.", wirkung: "gering", art: "Prozess" },
+    ],
+  },
+  {
+    id: "glanzunterschiede",
+    name: "Glanzunterschiede / matte Stellen",
+    alias: ["Glanzflecken", "Mattstellen"],
+    kategorie: "Oberfläche",
+    beschreibung:
+      "Ungleichmäßiger Glanz auf der Oberfläche, z. B. matte Stellen am Anschnitt, an Wanddickensprüngen oder am Fließwegende.",
+    ursachen: [
+      "Werkzeugtemperatur zu niedrig oder ungleichmäßig",
+      "Masse wird nicht ausreichend an die Werkzeugwand gepresst",
+      "Beläge oder Verschleiß auf der Werkzeugoberfläche",
+    ],
+    loesungen: [
+      { massnahme: "Werkzeugtemperatur erhöhen", detail: "Bessere Abformung der Werkzeugoberfläche.", wirkung: "hoch", art: "Prozess" },
+      { massnahme: "Einspritzgeschwindigkeit erhöhen", detail: "Masse erreicht die Wand wärmer.", wirkung: "mittel", art: "Prozess" },
+      { massnahme: "Nachdruck erhöhen", detail: "Presst die Masse besser an die Werkzeugwand.", wirkung: "mittel", art: "Prozess" },
+      { massnahme: "Massetemperatur erhöhen", detail: "Bessere Abformung.", wirkung: "gering", art: "Prozess" },
+      { massnahme: "Werkzeugoberfläche reinigen / polieren", detail: "Beläge (Ausdampfungen) entfernen, Oberfläche nachpolieren.", wirkung: "mittel", art: "Werkzeug" },
+    ],
+  },
+  {
+    id: "rillen",
+    name: "Rillen / Schallplatteneffekt",
+    alias: ["Kräuselung", "Orangenhaut", "Riefen"],
+    kategorie: "Oberfläche",
+    beschreibung:
+      "Feine, konzentrische Rillen quer zur Fließrichtung, ähnlich einer Schallplatte, meist an Fließwegenden.",
+    ursachen: [
+      "Fließfront kühlt zu stark ab und wird nicht an die Wand gedrückt",
+      "Einspritzgeschwindigkeit zu niedrig",
+      "Werkzeug- oder Massetemperatur zu niedrig",
+    ],
+    loesungen: [
+      { massnahme: "Einspritzgeschwindigkeit erhöhen", detail: "Wirksamste Maßnahme – Fließfront bleibt warm.", wirkung: "hoch", art: "Prozess" },
+      { massnahme: "Werkzeugtemperatur erhöhen", detail: "Verzögert das Einfrieren der Randschicht.", wirkung: "hoch", art: "Prozess" },
+      { massnahme: "Massetemperatur erhöhen", detail: "Niedrigere Viskosität.", wirkung: "mittel", art: "Prozess" },
+      { massnahme: "Nachdruck erhöhen", detail: "Verbessert die Abformung.", wirkung: "gering", art: "Prozess" },
+      { massnahme: "Anschnitt vergrößern", detail: "Geringerer Druckverlust.", wirkung: "gering", art: "Werkzeug" },
+    ],
+  },
+  {
+    id: "farbschlieren",
+    name: "Farbschlieren / Farbunterschiede",
+    alias: ["Farbstreifen", "Wolkenbildung", "inhomogene Farbe"],
+    kategorie: "Verfärbung & Verunreinigung",
+    beschreibung:
+      "Ungleichmäßige Farbverteilung, Streifen oder Wolken im Formteil, meist beim Einfärben mit Masterbatch.",
+    ursachen: [
+      "Masterbatch schlecht eingemischt oder falsch dosiert",
+      "Ungenügende Homogenisierung in der Schnecke",
+      "Masterbatch-Träger nicht verträglich mit dem Grundmaterial",
+      "Materialreste im Zylinder (Farbwechsel)",
+    ],
+    loesungen: [
+      { massnahme: "Masterbatch-Dosierung prüfen", detail: "Dosiergerät kalibrieren, Dosiermenge laut Empfehlung (typisch 1–4 %).", wirkung: "hoch", art: "Material" },
+      { massnahme: "Staudruck erhöhen", detail: "Verbessert die Durchmischung deutlich.", wirkung: "hoch", art: "Prozess" },
+      { massnahme: "Zylinder reinigen", detail: "Bei Farbwechsel mit Reinigungsgranulat spülen.", wirkung: "mittel", art: "Maschine" },
+      { massnahme: "Massetemperatur erhöhen", detail: "Bessere Dispergierung des Farbmittels.", wirkung: "mittel", art: "Prozess" },
+      { massnahme: "Verträglichkeit des Masterbatches prüfen", detail: "Trägermaterial passend zum Grundpolymer wählen.", wirkung: "mittel", art: "Material" },
+      { massnahme: "Mischteil / Mischdüse einsetzen", detail: "Statischer Mischer in der Düse oder Schnecke mit Mischteil.", wirkung: "mittel", art: "Maschine" },
+    ],
+  },
+  {
+    id: "schwarze-punkte",
+    name: "Schwarze Punkte / Einschlüsse",
+    alias: ["Black Specks", "Verunreinigungen", "Fremdpartikel"],
+    kategorie: "Verfärbung & Verunreinigung",
+    beschreibung:
+      "Schwarze oder dunkle Partikel im oder auf dem Formteil.",
+    ursachen: [
+      "Verkokte Ablagerungen in Zylinder, Schnecke, Rückstromsperre oder Heißkanal",
+      "Verunreinigtes Granulat oder Mahlgut",
+      "Zu lange Verweilzeit / zu hohe Temperatur",
+    ],
+    loesungen: [
+      { massnahme: "Zylinder und Schnecke reinigen", detail: "Mit Reinigungsgranulat spülen; bei hartnäckigen Fällen Schnecke ausbauen und reinigen.", wirkung: "hoch", art: "Maschine" },
+      { massnahme: "Material auf Verunreinigung prüfen", detail: "Granulat, Mahlgut und Fördersystem kontrollieren; Mahlgutanteil reduzieren.", wirkung: "hoch", art: "Material" },
+      { massnahme: "Rückstromsperre, Düse und Heißkanal prüfen", detail: "Auf Verschleiß, Ablagerungen und Toträume untersuchen.", wirkung: "mittel", art: "Maschine" },
+      { massnahme: "Temperatur und Verweilzeit senken", detail: "Verhindert weitere Zersetzung. Bei Stillständen Temperatur absenken.", wirkung: "mittel", art: "Prozess" },
+    ],
+  },
+  {
+    id: "luftblasen",
+    name: "Luftblasen / Lufteinschlüsse",
+    alias: ["Luftschlieren", "Blasen"],
+    kategorie: "Struktur & Festigkeit",
+    beschreibung:
+      "Blasen im Formteil oder Luftschlieren an der Oberfläche durch beim Dosieren oder Einspritzen eingezogene Luft.",
+    ursachen: [
+      "Zu große Dekompression (Schneckenrückzug)",
+      "Staudruck zu niedrig",
+      "Luft wird beim Dosieren eingezogen",
+      "Luft wird beim Einspritzen eingeschlossen",
+    ],
+    loesungen: [
+      { massnahme: "Dekompression reduzieren", detail: "Schneckenrückzug nur so groß wie nötig gegen Fadenziehen.", wirkung: "hoch", art: "Prozess" },
+      { massnahme: "Staudruck erhöhen", detail: "Drückt Luft beim Dosieren zum Trichter zurück.", wirkung: "hoch", art: "Prozess" },
+      { massnahme: "Schneckendrehzahl reduzieren", detail: "Gleichmäßigerer Materialeinzug.", wirkung: "mittel", art: "Prozess" },
+      { massnahme: "Einspritzgeschwindigkeit anpassen", detail: "Fließfront ruhiger führen, damit keine Luft eingeschlossen wird.", wirkung: "mittel", art: "Prozess" },
+      { massnahme: "Entlüftung verbessern", detail: "Luftfallen im Werkzeug entlüften.", wirkung: "mittel", art: "Werkzeug" },
+      { massnahme: "Trocknung prüfen", detail: "Blasen können auch Wasserdampf sein – Feuchte ausschließen.", wirkung: "mittel", art: "Material" },
+    ],
+  },
+  {
+    id: "spannungsrisse",
+    name: "Spannungsrisse / Weißbruch",
+    alias: ["Risse", "Spannungsrissbildung", "Crazing"],
+    kategorie: "Struktur & Festigkeit",
+    beschreibung:
+      "Feine Risse oder weißliche Verfärbungen, sofort oder erst später (z. B. bei Kontakt mit Medien). Ursache sind innere Spannungen oder Überlastung beim Entformen.",
+    ursachen: [
+      "Hohe Eigenspannungen (Werkzeug zu kalt, Überspritzen)",
+      "Zu hohe Entformungskräfte",
+      "Scharfe Kanten / Kerben",
+      "Kontakt mit spannungsrissauslösenden Medien",
+    ],
+    loesungen: [
+      { massnahme: "Werkzeugtemperatur erhöhen", detail: "Verringert eingefrorene Orientierungen und Eigenspannungen.", wirkung: "hoch", art: "Prozess" },
+      { massnahme: "Nachdruck reduzieren", detail: "Überpackung im Anschnittbereich vermeiden.", wirkung: "hoch", art: "Prozess" },
+      { massnahme: "Massetemperatur erhöhen", detail: "Weniger Orientierungsspannungen.", wirkung: "mittel", art: "Prozess" },
+      { massnahme: "Entformung verbessern", detail: "Entformungsschrägen und Auswerfer prüfen, Entformungsgeschwindigkeit senken.", wirkung: "mittel", art: "Werkzeug" },
+      { massnahme: "Konstruktion: Radien statt scharfer Kanten", detail: "Innenradien ≥ 0,5 × Wanddicke.", wirkung: "hoch", art: "Konstruktion" },
+      { massnahme: "Medienbeständigkeit prüfen / Tempern", detail: "Kontakt mit Ölen, Reinigern, Weichmachern prüfen; Tempern baut Spannungen ab.", wirkung: "mittel", art: "Material" },
+    ],
+  },
+  {
+    id: "entformungsprobleme",
+    name: "Entformungsprobleme / Auswerfermarkierungen",
+    alias: ["Kleben", "Hängenbleiben", "Auswerferabdrücke", "Ziehriefen"],
+    kategorie: "Entformung",
+    beschreibung:
+      "Teil bleibt im Werkzeug hängen, verformt sich beim Auswerfen, zeigt Abdrücke der Auswerfer oder Kratzer (Ziehriefen) an Seitenwänden.",
+    ursachen: [
+      "Formteil überspritzt (zu hoher Nachdruck)",
+      "Teil zu warm beim Entformen",
+      "Zu geringe Entformungsschrägen / raue Oberfläche",
+      "Zu wenige oder zu kleine Auswerfer",
+    ],
+    loesungen: [
+      { massnahme: "Nachdruck reduzieren", detail: "Überpackte Teile klemmen im Werkzeug.", wirkung: "hoch", art: "Prozess" },
+      { massnahme: "Kühlzeit verlängern", detail: "Teil wird steifer und hält die Auswerferkraft aus.", wirkung: "hoch", art: "Prozess" },
+      { massnahme: "Werkzeugtemperatur an der Klebeseite anpassen", detail: "Die Seite, an der das Teil hängen bleibt, kühler fahren (Teil schwindet auf den Kern – Kern kühler).", wirkung: "mittel", art: "Prozess" },
+      { massnahme: "Auswerfergeschwindigkeit reduzieren", detail: "Gleichmäßiger Auswerfvorgang ohne Verformung.", wirkung: "mittel", art: "Prozess" },
+      { massnahme: "Entformungsschrägen vergrößern", detail: "Mindestens 0,5–1° je Seite, bei Narbung mehr (ca. 1° je 0,025 mm Narbtiefe).", wirkung: "hoch", art: "Werkzeug" },
+      { massnahme: "Oberfläche polieren / beschichten", detail: "In Entformungsrichtung polieren, ggf. Antihaftbeschichtung.", wirkung: "mittel", art: "Werkzeug" },
+      { massnahme: "Auswerfer vergrößern oder ergänzen", detail: "Kraft auf größere Fläche verteilen.", wirkung: "mittel", art: "Werkzeug" },
+      { massnahme: "Trennmittel", detail: "Nur als kurzfristige Notlösung – beeinträchtigt Lackier- und Klebbarkeit.", wirkung: "gering", art: "Prozess" },
+    ],
+  },
+  {
+    id: "kalter-pfropfen",
+    name: "Kalter Pfropfen",
+    alias: ["Kaltpfropfen", "Cold Slug"],
+    kategorie: "Oberfläche",
+    beschreibung:
+      "Erstarrtes Material aus der Düsenspitze wird mit eingespritzt und zeichnet sich als Fleck, Schliere oder Fremdkörper am Anschnitt ab.",
+    ursachen: [
+      "Düsentemperatur zu niedrig",
+      "Düse liegt zu lange am kalten Werkzeug an",
+      "Kein Kaltpfropfenfang im Anguss",
+    ],
+    loesungen: [
+      { massnahme: "Düsentemperatur erhöhen", detail: "Bei Heißkanal: Temperatur der Düsenspitze erhöhen.", wirkung: "hoch", art: "Prozess" },
+      { massnahme: "Düse nach dem Dosieren abheben", detail: "Düsenanlage nur während Einspritzen/Nachdruck – verhindert Wärmeabfluss ins Werkzeug.", wirkung: "hoch", art: "Prozess" },
+      { massnahme: "Kaltpfropfenfang vorsehen", detail: "Verlängerung des Angusskanals gegenüber dem Anguss.", wirkung: "mittel", art: "Werkzeug" },
+      { massnahme: "Verschlussdüse einsetzen", detail: "Verhindert Auslaufen und Einfrieren an der Düsenspitze.", wirkung: "mittel", art: "Maschine" },
+    ],
+  },
+  {
+    id: "delamination",
+    name: "Delamination / Schichtablösung",
+    alias: ["Abblättern", "Schichtenbildung"],
+    kategorie: "Struktur & Festigkeit",
+    beschreibung:
+      "Die Oberfläche löst sich in dünnen Schichten ab oder blättert auf, meist im Anschnittbereich.",
+    ursachen: [
+      "Verunreinigung mit unverträglichem Fremdmaterial",
+      "Feuchtigkeit",
+      "Zu hohe Scherung bei kalter Masse / kaltem Werkzeug",
+    ],
+    loesungen: [
+      { massnahme: "Materialverunreinigung beseitigen", detail: "Fremdmaterial ausschließen (Fördersystem, Mahlgut, Zylinder spülen).", wirkung: "hoch", art: "Material" },
+      { massnahme: "Granulat trocknen", detail: "Restfeuchte laut Datenblatt prüfen.", wirkung: "hoch", art: "Material" },
+      { massnahme: "Masse- und Werkzeugtemperatur erhöhen", detail: "Verbessert die Haftung der Schichten.", wirkung: "mittel", art: "Prozess" },
+      { massnahme: "Einspritzgeschwindigkeit reduzieren", detail: "Senkt die Scherung an der Randschicht.", wirkung: "mittel", art: "Prozess" },
+    ],
+  },
+  {
+    id: "massabweichungen",
+    name: "Maßabweichungen",
+    alias: ["Übermaß", "Untermaß", "Maßschwankungen"],
+    kategorie: "Füllung & Maß",
+    beschreibung:
+      "Formteilmaße liegen außerhalb der Toleranz oder schwanken von Schuss zu Schuss.",
+    ursachen: [
+      "Instabiler Prozess (schwankendes Massepolster, Temperaturen)",
+      "Nachdruck / Nachdruckzeit falsch",
+      "Werkzeugtemperatur falsch",
+      "Material schwankt (Feuchte, Charge)",
+    ],
+    loesungen: [
+      { massnahme: "Prozess stabilisieren", detail: "Massepolster, Dosierzeit, Umschaltpunkt und Temperaturen auf Konstanz prüfen. Bei Schwankungen zuerst Ursache (z. B. Rückstromsperre) beheben.", wirkung: "hoch", art: "Prozess" },
+      { massnahme: "Nachdruck anpassen", detail: "Teil zu klein → Nachdruck erhöhen; Teil zu groß → Nachdruck senken.", wirkung: "hoch", art: "Prozess" },
+      { massnahme: "Nachdruckzeit bis zum Siegelpunkt", detail: "Gewichtskonstanz sicherstellen.", wirkung: "mittel", art: "Prozess" },
+      { massnahme: "Werkzeugtemperatur anpassen", detail: "Höhere Werkzeugtemperatur → mehr Schwindung (kleinere Maße), aber weniger Nachschwindung.", wirkung: "mittel", art: "Prozess" },
+      { massnahme: "Materialeinflüsse ausschließen", detail: "Trocknung, Chargenwechsel und Mahlgutanteil prüfen.", wirkung: "mittel", art: "Material" },
+      { massnahme: "Werkzeugmaße korrigieren", detail: "Wenn der Prozess ausgeschöpft ist: Kavität nacharbeiten.", wirkung: "hoch", art: "Werkzeug" },
+    ],
+  },
+];
+</script>
+<script>
+  const state = { filter: "Alle", query: "", aktiv: null };
+  const $ = (id) => document.getElementById(id);
+  const esc = (s) => String(s).replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
+  const norm = (s) => s.toLowerCase().normalize("NFD").replace(/[̀-ͯ]/g, "");
+
+  // Abgehakte Maßnahmen (nur im eigenen Browser gespeichert)
+  function ladeErledigt() {
+    try { return JSON.parse(localStorage.getItem("fehlerhelfer-erledigt")) || {}; } catch { return {}; }
+  }
+  function speichereErledigt(obj) {
+    try { localStorage.setItem("fehlerhelfer-erledigt", JSON.stringify(obj)); } catch {}
+  }
+  let erledigt = ladeErledigt();
+
+  function renderChips() {
+    $("chips").innerHTML = ["Alle", ...KATEGORIEN]
+      .map((k) => `<button class="chip${k === state.filter ? " active" : ""}" data-k="${esc(k)}">${esc(k)}</button>`)
+      .join("");
+  }
+
+  function gefiltert() {
+    const q = norm(state.query.trim());
+    return FEHLER.filter((f) => {
+      if (state.filter !== "Alle" && f.kategorie !== state.filter) return false;
+      if (!q) return true;
+      return norm([f.name, ...f.alias, f.beschreibung].join(" ")).includes(q);
+    });
+  }
+
+  function renderList() {
+    const items = gefiltert();
+    $("list").innerHTML = items.length
+      ? items.map((f) => `<li><button data-id="${f.id}" class="${f.id === state.aktiv ? "active" : ""}">${esc(f.name)}<small>${esc(f.alias.slice(0, 2).join(" · "))}</small></button></li>`).join("")
+      : `<li class="empty">Kein Fehler gefunden.</li>`;
+  }
+
+  function renderDetail() {
+    const f = FEHLER.find((x) => x.id === state.aktiv);
+    $("layout").classList.toggle("show-detail", !!f);
+    if (!f) {
+      $("detail").innerHTML = `<h2>Fehler auswählen</h2><p class="alias">Wähle links einen Fehler aus, um Ursachen und Lösungen zu sehen.</p>${grundregeln()}`;
+      return;
+    }
+    const done = erledigt[f.id] || [];
+    $("detail").innerHTML = `
+      <button class="back" id="back">← Alle Fehler</button>
+      <div class="kat">${esc(f.kategorie)}</div>
+      <h2>${esc(f.name)}</h2>
+      <div class="alias">Auch: ${esc(f.alias.join(", "))}</div>
+      <p>${esc(f.beschreibung)}</p>
+
+      <h3>Mögliche Ursachen</h3>
+      <ul class="ursachen">${f.ursachen.map((u) => `<li>${esc(u)}</li>`).join("")}</ul>
+
+      <div class="loesungen-head">
+        <h3>Lösungen – wirksamste zuerst</h3>
+        ${done.length ? `<button class="reset" id="reset">Haken zurücksetzen</button>` : ""}
+      </div>
+      <ol class="loesungen">
+        ${f.loesungen.map((l, i) => `
+          <li class="loesung${done.includes(i) ? " done" : ""}">
+            <div class="rang">${i + 1}</div>
+            <div>
+              <div class="titel">${esc(l.massnahme)}</div>
+              <div class="info">${esc(l.detail)}</div>
+              <div class="tags">
+                <span class="tag w-${l.wirkung}">Wirkung: ${l.wirkung}</span>
+                <span class="tag art">${esc(l.art)}</span>
+              </div>
+            </div>
+            <label class="check"><input type="checkbox" data-i="${i}"${done.includes(i) ? " checked" : ""}> probiert</label>
+          </li>`).join("")}
+      </ol>
+      ${grundregeln()}`;
+  }
+
+  function grundregeln() {
+    return `<div class="hinweis"><strong>Grundregeln bei der Fehlersuche</strong>
+      <ul>
+        <li>Immer nur <strong>einen</strong> Parameter gleichzeitig ändern und einige Zyklen abwarten, bis der Prozess stabil ist.</li>
+        <li>Vorher prüfen: Massepolster vorhanden und konstant? Material richtig getrocknet? Temperaturen erreicht?</li>
+        <li>Prozessmaßnahmen zuerst – Werkzeug- und Konstruktionsänderungen sind teurer und langwieriger.</li>
+        <li>Verarbeitungsgrenzen laut Materialdatenblatt einhalten. Die Reihenfolge ist ein Erfahrungswert und kann je nach Material und Werkzeug abweichen.</li>
+      </ul></div>`;
+  }
+
+  function zeige(id) {
+    state.aktiv = id;
+    try { history.replaceState(null, "", id ? "#" + id : location.pathname); } catch {}
+    render();
+    window.scrollTo(0, 0);
+  }
+
+  function render() { renderChips(); renderList(); renderDetail(); }
+
+  function ausHash() {
+    const id = decodeURIComponent(location.hash.slice(1));
+    state.aktiv = FEHLER.some((f) => f.id === id) ? id : null;
+    render();
+    if (state.aktiv) window.scrollTo(0, 0);
+  }
+
+  $("search").addEventListener("input", (e) => { state.query = e.target.value; renderList(); });
+  $("chips").addEventListener("click", (e) => {
+    const k = e.target.closest(".chip")?.dataset.k;
+    if (k) { state.filter = k; renderChips(); renderList(); }
+  });
+  $("list").addEventListener("click", (e) => {
+    const id = e.target.closest("button")?.dataset.id;
+    if (id) zeige(id);
+  });
+  $("detail").addEventListener("click", (e) => {
+    if (e.target.id === "back") zeige(null);
+    if (e.target.id === "reset") { delete erledigt[state.aktiv]; speichereErledigt(erledigt); renderDetail(); }
+  });
+  $("detail").addEventListener("change", (e) => {
+    if (e.target.type !== "checkbox") return;
+    const i = Number(e.target.dataset.i);
+    const set = new Set(erledigt[state.aktiv] || []);
+    e.target.checked ? set.add(i) : set.delete(i);
+    erledigt[state.aktiv] = [...set];
+    speichereErledigt(erledigt);
+    renderDetail();
+  });
+  window.addEventListener("hashchange", ausHash);
+  window.addEventListener("popstate", ausHash);
+
+  // Offline-Funktion / Installierbarkeit (nur über http(s), nicht bei file://)
+  if ("serviceWorker" in navigator && location.protocol.startsWith("http")) {
+    navigator.serviceWorker.register("sw.js").catch(() => {});
+  }
+
+  // Desktop: ersten Fehler direkt anzeigen
+  if (!location.hash && window.matchMedia("(min-width: 801px)").matches) {
+    state.aktiv = FEHLER[0].id;
+    render();
+  } else {
+    ausHash();
+  }
+</script>
+</body>
+</html>
