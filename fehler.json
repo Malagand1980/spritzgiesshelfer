@@ -502,6 +502,205 @@
         { "massnahme": "Materialeinflüsse ausschließen", "detail": "Trocknung, Chargenwechsel und Mahlgutanteil prüfen.", "wirkung": "mittel", "art": "Material" },
         { "massnahme": "Werkzeugmaße korrigieren", "detail": "Wenn der Prozess ausgeschöpft ist: Kavität nacharbeiten.", "wirkung": "hoch", "art": "Werkzeug" }
       ]
+    },
+    {
+      "id": "orangenhaut",
+      "name": "Orangenhaut",
+      "alias": [
+        "Orange Peel",
+        "wellige Oberfläche",
+        "Apfelsinenhaut",
+        "unruhige Oberfläche"
+      ],
+      "kategorie": "Oberfläche",
+      "beschreibung": "Die Oberfläche wirkt flächig leicht wellig bzw. genarbt wie eine Orangenschale, besonders auf Hochglanzflächen sichtbar. Die Werkzeugoberfläche wird nicht sauber abgeformt.",
+      "annahme": "ANNAHME (noch nicht in der Praxis bestätigt): Eigener Eintrag, weil Orangenhaut (flächig wellige Oberfläche) sich von Rillen/Schallplatteneffekt unterscheidet; dort steht 'Orangenhaut' noch als Alias. Variotherme Temperierung nur bei Hochglanzteilen sinnvoll.",
+      "ursachen": [
+        "Werkzeugtemperatur zu niedrig – Randschicht friert vor dem Anpressen ein",
+        "Nachdruck zu niedrig oder zu kurz – Masse liegt nicht vollflächig an",
+        "Einspritzgeschwindigkeit zu niedrig",
+        "Ungleichmäßige Werkzeugtemperierung (kalte Zonen)",
+        "Werkzeugoberfläche verschlissen, korrodiert oder mit Belägen",
+        "Feuchtes Material oder Gasbildung zwischen Masse und Werkzeugwand"
+      ],
+      "loesungen": [
+        { "massnahme": "Werkzeugtemperatur erhöhen", "detail": "In 5–10 °C-Schritten erhöhen; heißere Wand verbessert die Abformung der Oberfläche deutlich.", "wirkung": "hoch", "art": "Prozess" },
+        { "massnahme": "Nachdruck erhöhen / Nachdruckzeit verlängern", "detail": "Masse wird länger gegen die Werkzeugwand gepresst und bildet die Oberfläche genauer ab.", "wirkung": "hoch", "art": "Prozess" },
+        { "massnahme": "Einspritzgeschwindigkeit erhöhen", "detail": "Weniger Abkühlung der Fließfront vor dem Anlegen an die Wand.", "wirkung": "mittel", "art": "Prozess" },
+        { "massnahme": "Temperierung prüfen", "detail": "Temperierkanäle auf Durchfluss und Verkalkung prüfen, Vor- und Rücklauftemperatur vergleichen (Differenz möglichst < 5 °C).", "wirkung": "mittel", "art": "Werkzeug" },
+        { "massnahme": "Material trocknen", "detail": "Feuchte oder Ausgasungen verhindern das vollflächige Anliegen.", "wirkung": "mittel", "art": "Material" },
+        { "massnahme": "Werkzeugoberfläche reinigen / nachpolieren", "detail": "Beläge entfernen; bei Verschleiß Oberfläche nachpolieren oder neu beschichten.", "wirkung": "mittel", "art": "Werkzeug" },
+        { "massnahme": "Variotherme Temperierung erwägen", "detail": "Bei Hochglanzteilen, wenn konventionelle Temperierung nicht reicht. Hoher Aufwand.", "wirkung": "gering", "art": "Werkzeug" }
+      ]
+    },
+    {
+      "id": "mikrorisse",
+      "name": "Mikrorisse / Haarrisse",
+      "alias": [
+        "Haarrisse",
+        "Microcracks",
+        "Feinrisse",
+        "Netzrisse"
+      ],
+      "kategorie": "Struktur & Festigkeit",
+      "beschreibung": "Sehr feine, oft nur unter Lupe oder Streiflicht sichtbare Risse – häufig an Anschnitt, Einlegeteilen, Schraubdomen oder Ecken. Treten oft erst Stunden bis Wochen nach der Produktion oder nach Kontakt mit Medien auf.",
+      "annahme": "ANNAHME (noch nicht in der Praxis bestätigt): Überschneidet sich mit 'Spannungsrisse / Weißbruch', ggf. zusammenführen. Vorwärmtemperatur für Einlegeteile (80–150 °C) ist ein allgemeiner Richtwert.",
+      "ursachen": [
+        "Eingefrorene Eigenspannungen (Werkzeug zu kalt, Überspritzen am Anschnitt)",
+        "Kalte Einlegeteile (Metallinserts) – Schrumpfspannung beim Abkühlen",
+        "Montagespannungen (Einpressen, Verschrauben, Clipsen)",
+        "Kontakt mit Ölen, Reinigern, Trennmittel, Alkohol",
+        "Materialabbau (Überhitzung, zu lange Verweilzeit, Hydrolyse bei PC/PET/PA)",
+        "Zu hoher Mahlgutanteil"
+      ],
+      "loesungen": [
+        { "massnahme": "Werkzeugtemperatur erhöhen", "detail": "Baut Orientierungen und Eigenspannungen ab – wichtigste Prozessmaßnahme.", "wirkung": "hoch", "art": "Prozess" },
+        { "massnahme": "Nachdruck senken", "detail": "Überpackung am Anschnitt vermeiden; Nachdruckprofil fallend einstellen.", "wirkung": "hoch", "art": "Prozess" },
+        { "massnahme": "Einlegeteile vorwärmen", "detail": "Metallinserts auf etwa Werkzeugtemperatur vorwärmen (ca. 80–150 °C), damit beim Abkühlen weniger Schrumpfspannung entsteht.", "wirkung": "hoch", "art": "Prozess" },
+        { "massnahme": "Trennmittel und Medienkontakt prüfen", "detail": "Kein silikon- oder lösemittelhaltiges Trennspray bei rissempfindlichen Kunststoffen (PC, PMMA, PS, ABS). Reiniger und Öle in der Montage prüfen.", "wirkung": "mittel", "art": "Material" },
+        { "massnahme": "Material schonend verarbeiten", "detail": "Trocknung prüfen, Massetemperatur und Verweilzeit im Datenblattfenster halten, Mahlgutanteil begrenzen.", "wirkung": "mittel", "art": "Material" },
+        { "massnahme": "Tempern", "detail": "Nachträgliche Wärmebehandlung baut Eigenspannungen ab (Temperatur und Zeit laut Materialhersteller).", "wirkung": "mittel", "art": "Prozess" },
+        { "massnahme": "Konstruktion: Radien und Wandstärke um Inserts", "detail": "Scharfe Kanten vermeiden, ausreichend Wanddicke um Einlegeteile vorsehen.", "wirkung": "hoch", "art": "Konstruktion" }
+      ]
+    },
+    {
+      "id": "fadenziehen",
+      "name": "Fadenziehen / Düse tropft",
+      "alias": [
+        "Fäden ziehen",
+        "Angussfäden",
+        "Stringing",
+        "Düsensabbern",
+        "Düsentropfen"
+      ],
+      "kategorie": "Entformung",
+      "beschreibung": "Beim Abheben der Düse oder beim Entformen zieht der Anguss einen dünnen Kunststofffaden, der am Teil hängen bleibt oder ins Werkzeug fällt. Verwandt: Masse tropft aus der Düse (Sabbern).",
+      "ursachen": [
+        "Düsentemperatur zu hoch",
+        "Keine oder zu geringe Dekompression (Schnecke saugt nicht zurück)",
+        "Anguss noch nicht ausreichend erstarrt (Kühlzeit zu kurz)",
+        "Massetemperatur zu hoch",
+        "Feuchtes Material (niedrige Viskosität)",
+        "Bei Heißkanal: Düsenspitze zu heiß"
+      ],
+      "loesungen": [
+        { "massnahme": "Dekompression einstellen / erhöhen", "detail": "Nach dem Dosieren Schnecke ca. 2–5 mm zurückziehen, damit die Düse nicht nachläuft. Nicht zu viel, sonst wird Luft eingezogen.", "wirkung": "hoch", "art": "Prozess" },
+        { "massnahme": "Düsentemperatur senken", "detail": "In 5 °C-Schritten absenken, bis kein Faden mehr entsteht, ohne dass der Anguss einfriert.", "wirkung": "hoch", "art": "Prozess" },
+        { "massnahme": "Kühlzeit verlängern", "detail": "Der Anguss reißt dann sauber ab.", "wirkung": "mittel", "art": "Prozess" },
+        { "massnahme": "Düse früher abheben", "detail": "Düsenabhebung direkt nach dem Dosieren, damit die Düse nicht am kalten Anguss anliegt.", "wirkung": "mittel", "art": "Prozess" },
+        { "massnahme": "Material trocknen", "detail": "Feuchtigkeit senkt die Viskosität und fördert Fäden.", "wirkung": "mittel", "art": "Material" },
+        { "massnahme": "Verschlussdüse einsetzen", "detail": "Bei niedrigviskosen Materialien (z. B. PA) dauerhafte Lösung.", "wirkung": "hoch", "art": "Maschine" },
+        { "massnahme": "Heißkanal: Spitzentemperatur senken", "detail": "Düsenspitze bzw. Anschnittbereich kühler regeln oder Nadelverschluss nutzen.", "wirkung": "mittel", "art": "Werkzeug" }
+      ]
+    },
+    {
+      "id": "mahlgut-schlieren",
+      "name": "Silberschlieren durch Mahlgut",
+      "alias": [
+        "Mahlgutschlieren",
+        "Regenerat-Schlieren",
+        "Schlieren durch Regranulat",
+        "Recyclat"
+      ],
+      "kategorie": "Verfärbung & Verunreinigung",
+      "beschreibung": "Silbrige oder graue Schlieren, die erst bei Zugabe von Mahlgut auftreten oder mit steigendem Mahlgutanteil stärker werden.",
+      "annahme": "ANNAHME (noch nicht in der Praxis bestätigt): Eigener Eintrag zu Schlieren speziell durch Mahlgut, allgemeine Feuchtigkeitsschlieren stehen separat. Mahlgutanteil 10–25 % ist ein allgemeiner Richtwert, Freigabe hängt von Kunde/Teil ab.",
+      "ursachen": [
+        "Mahlgut ist feucht (offen gelagert, nicht mitgetrocknet)",
+        "Hoher Staub- und Feinanteil – schmilzt früher, zersetzt sich, schließt Luft ein",
+        "Mahlgut ist thermisch vorgeschädigt (mehrfach verarbeitet)",
+        "Ungleichmäßige Korngröße – schwankende Dosierung, Lufteinschlüsse",
+        "Verunreinigungen oder fremde Materialien im Mahlgut",
+        "Mahlgutanteil zu hoch"
+      ],
+      "loesungen": [
+        { "massnahme": "Mahlgut zusammen mit Neuware trocknen", "detail": "Mahlgut nimmt Feuchtigkeit oft schneller auf. Trocknung nach Datenblatt, Restfeuchte prüfen.", "wirkung": "hoch", "art": "Material" },
+        { "massnahme": "Mahlgutanteil begrenzen", "detail": "Üblich sind max. 10–25 %. Testen, ab welchem Anteil die Schlieren auftreten.", "wirkung": "hoch", "art": "Material" },
+        { "massnahme": "Staub absieben / entstauben", "detail": "Feinanteil mit Sieb oder Entstauber entfernen; Mühlenmesser schärfen (stumpfe Messer erzeugen Staub).", "wirkung": "hoch", "art": "Material" },
+        { "massnahme": "Mahlgut gleichmäßig mischen", "detail": "Konstantes Mischungsverhältnis über Dosiergerät statt Zugabe von Hand.", "wirkung": "mittel", "art": "Material" },
+        { "massnahme": "Staudruck leicht erhöhen", "detail": "Bessere Entgasung und Homogenisierung beim Dosieren.", "wirkung": "mittel", "art": "Prozess" },
+        { "massnahme": "Massetemperatur / Verweilzeit senken", "detail": "Vorgeschädigtes Mahlgut nicht zusätzlich belasten.", "wirkung": "mittel", "art": "Prozess" },
+        { "massnahme": "Mahlgut sortenrein und sauber lagern", "detail": "Geschlossene, beschriftete Behälter; keine Vermischung mit anderen Typen oder Farben.", "wirkung": "mittel", "art": "Material" }
+      ]
+    },
+    {
+      "id": "glasfasern-oberflaeche",
+      "name": "Glasfasern an der Oberfläche",
+      "alias": [
+        "Faserabzeichnung",
+        "Fasern sichtbar",
+        "raue Oberfläche bei GF"
+      ],
+      "kategorie": "Oberfläche",
+      "beschreibung": "Bei glasfaserverstärkten Materialien (z. B. PA-GF, PP-GF) treten Fasern an die Oberfläche: matte, raue, silbrig-helle Bereiche.",
+      "ursachen": [
+        "Werkzeugtemperatur zu niedrig",
+        "Einspritzgeschwindigkeit zu niedrig",
+        "Nachdruck zu niedrig",
+        "Massetemperatur zu niedrig",
+        "Hoher Faseranteil"
+      ],
+      "loesungen": [
+        { "massnahme": "Werkzeugtemperatur erhöhen", "detail": "Die wichtigste Maßnahme – eine heißere Wand bildet eine geschlossene, faserarme Randschicht.", "wirkung": "hoch", "art": "Prozess" },
+        { "massnahme": "Einspritzgeschwindigkeit erhöhen", "detail": "Schnelles Füllen sorgt für mehr Matrix an der Oberfläche.", "wirkung": "hoch", "art": "Prozess" },
+        { "massnahme": "Nachdruck erhöhen", "detail": "Presst die Matrix an die Werkzeugwand.", "wirkung": "mittel", "art": "Prozess" },
+        { "massnahme": "Massetemperatur erhöhen", "detail": "Im oberen Bereich des Verarbeitungsfensters arbeiten.", "wirkung": "mittel", "art": "Prozess" },
+        { "massnahme": "Materialtyp mit Oberflächenoptimierung", "detail": "Typen mit besserer Fasereinbindung oder geringerem Faseranteil wählen, falls zulässig.", "wirkung": "mittel", "art": "Material" }
+      ]
+    },
+    {
+      "id": "anschnittmarkierung",
+      "name": "Anschnittmarkierung / matter Hof am Anschnitt",
+      "alias": [
+        "Hof am Anschnitt",
+        "Anschnittfleck",
+        "Gate Blush",
+        "Matter Fleck am Anguss"
+      ],
+      "kategorie": "Oberfläche",
+      "beschreibung": "Rund um den Anschnitt entsteht ein matter, trüber oder ringförmiger Fleck, teils mit feinen Schuppen.",
+      "ursachen": [
+        "Einspritzgeschwindigkeit am Anfang zu hoch – hohe Scherung im Anschnitt",
+        "Anschnitt zu klein oder scharfkantig",
+        "Werkzeugtemperatur zu niedrig",
+        "Kalter Pfropfen aus der Düse",
+        "Massetemperatur zu hoch (Scherschädigung)"
+      ],
+      "loesungen": [
+        { "massnahme": "Einspritzprofil: langsam starten", "detail": "Erste Stufe (Anschnittbereich) langsam fahren, danach schneller.", "wirkung": "hoch", "art": "Prozess" },
+        { "massnahme": "Werkzeugtemperatur erhöhen", "detail": "Verbessert die Abformung rund um den Anschnitt.", "wirkung": "mittel", "art": "Prozess" },
+        { "massnahme": "Kaltpfropfenfang vorsehen", "detail": "Kalter Pfropfen darf nicht in die Kavität gelangen; Düsentemperatur prüfen.", "wirkung": "mittel", "art": "Werkzeug" },
+        { "massnahme": "Massetemperatur anpassen", "detail": "Bei Scherschädigung senken, bei kalter Masse leicht erhöhen.", "wirkung": "mittel", "art": "Prozess" },
+        { "massnahme": "Anschnitt vergrößern / verrunden", "detail": "Kanten am Anschnittübergang verrunden, Querschnitt vergrößern.", "wirkung": "hoch", "art": "Werkzeug" }
+      ]
+    },
+    {
+      "id": "dosierprobleme",
+      "name": "Dosierprobleme / schwankende Dosierzeit",
+      "alias": [
+        "Schnecke zieht nicht ein",
+        "Dosierzeit zu lang",
+        "Brückenbildung",
+        "Einzugsprobleme"
+      ],
+      "kategorie": "Füllung & Maß",
+      "beschreibung": "Die Schnecke dosiert langsam, ungleichmäßig oder gar nicht. Folge sind schwankendes Massepolster, Füllmangel und Maßschwankungen.",
+      "ursachen": [
+        "Einzugszone zu heiß – Granulat schmilzt vorzeitig und verklebt",
+        "Brückenbildung im Trichter (Mahlgut, Staub, feuchtes Material)",
+        "Staudruck zu hoch",
+        "Schneckendrehzahl ungünstig",
+        "Verschleiß von Schnecke, Zylinder oder Rückstromsperre",
+        "Einzugskühlung ausgefallen"
+      ],
+      "loesungen": [
+        { "massnahme": "Einzugstemperatur / Einzugskühlung prüfen", "detail": "Einzugszone kühl halten (typisch 30–50 °C am Trichter), Kühlwasserdurchfluss prüfen; hinterste Heizzone senken.", "wirkung": "hoch", "art": "Maschine" },
+        { "massnahme": "Trichter und Einzug kontrollieren", "detail": "Brücken lösen, Staub- und Mahlgutanteil reduzieren, Füllstandsmelder prüfen.", "wirkung": "hoch", "art": "Material" },
+        { "massnahme": "Staudruck reduzieren", "detail": "Zu hoher Staudruck verlängert die Dosierzeit deutlich.", "wirkung": "mittel", "art": "Prozess" },
+        { "massnahme": "Schneckendrehzahl anpassen", "detail": "Dosierzeit so einstellen, dass sie knapp innerhalb der Kühlzeit endet.", "wirkung": "mittel", "art": "Prozess" },
+        { "massnahme": "Material trocknen", "detail": "Feuchtes Material kann im Einzug verkleben.", "wirkung": "mittel", "art": "Material" },
+        { "massnahme": "Schnecke, Zylinder und Rückstromsperre prüfen", "detail": "Verschleißmessung, wenn die Probleme trotz Prozessanpassung bleiben.", "wirkung": "mittel", "art": "Maschine" }
+      ]
     }
   ]
 }
