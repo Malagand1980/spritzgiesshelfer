@@ -663,14 +663,13 @@
         "Einspritzgeschwindigkeit am Anfang zu hoch – hohe Scherung im Anschnitt",
         "Anschnitt zu klein oder scharfkantig",
         "Werkzeugtemperatur zu niedrig",
-        "Kalter Pfropfen aus der Düse",
-        "Massetemperatur zu hoch (Scherschädigung)"
+        "Kalter Pfropfen aus der Düse"
       ],
       "loesungen": [
         { "massnahme": "Einspritzprofil: langsam starten", "detail": "Erste Stufe (Anschnittbereich) langsam fahren, danach schneller.", "wirkung": "hoch", "art": "Prozess" },
         { "massnahme": "Werkzeugtemperatur erhöhen", "detail": "Verbessert die Abformung rund um den Anschnitt.", "wirkung": "mittel", "art": "Prozess" },
         { "massnahme": "Kaltpfropfenfang vorsehen", "detail": "Kalter Pfropfen darf nicht in die Kavität gelangen; Düsentemperatur prüfen.", "wirkung": "mittel", "art": "Werkzeug" },
-        { "massnahme": "Massetemperatur anpassen", "detail": "Bei Scherschädigung senken, bei kalter Masse leicht erhöhen.", "wirkung": "mittel", "art": "Prozess" },
+        { "massnahme": "Massetemperatur leicht erhöhen", "detail": "Wärmere Schmelze fließt leichter durch den Anschnitt und legt sich besser an die Wand an.", "wirkung": "mittel", "art": "Prozess" },
         { "massnahme": "Anschnitt vergrößern / verrunden", "detail": "Kanten am Anschnittübergang verrunden, Querschnitt vergrößern.", "wirkung": "hoch", "art": "Werkzeug" }
       ]
     },
@@ -700,6 +699,92 @@
         { "massnahme": "Schneckendrehzahl anpassen", "detail": "Dosierzeit so einstellen, dass sie knapp innerhalb der Kühlzeit endet.", "wirkung": "mittel", "art": "Prozess" },
         { "massnahme": "Material trocknen", "detail": "Feuchtes Material kann im Einzug verkleben.", "wirkung": "mittel", "art": "Material" },
         { "massnahme": "Schnecke, Zylinder und Rückstromsperre prüfen", "detail": "Verschleißmessung, wenn die Probleme trotz Prozessanpassung bleiben.", "wirkung": "mittel", "art": "Maschine" }
+      ]
+    },
+    {
+      "id": "schubmarkierungen",
+      "name": "Schubmarkierungen / Tigerstreifen",
+      "alias": [
+        "Tiger Lines",
+        "Tigerstreifen",
+        "Querstreifen",
+        "Glanz-Matt-Bänder"
+      ],
+      "kategorie": "Oberfläche",
+      "beschreibung": "Quer zur Fließrichtung wechseln sich glänzende und matte Streifen ab, ähnlich einem Tigerfell. Die Schmelze fließt nicht gleichmäßig, sondern stoßweise. Tritt vor allem bei Blends (z. B. PC/ABS, PP mit Füllstoffen) und gefüllten Typen auf.",
+      "annahme": "ANNAHME (noch nicht in der Praxis bestätigt): Aufgenommen, weil der Fehler in der App noch fehlte. Reihenfolge der Maßnahmen nach eigener Einschätzung.",
+      "ursachen": [
+        "Anschnitt, Verteiler oder Anguss zu eng – hoher Druckverlust",
+        "Bohrung der Maschinendüse zu klein",
+        "Wand zu dünn für den Fließweg",
+        "Massetemperatur zu niedrig",
+        "Schmelze rutscht abwechselnd an der Werkzeugwand und haftet wieder (Stick-Slip)"
+      ],
+      "loesungen": [
+        { "massnahme": "Anguss und Anschnitt aufweiten", "detail": "Querschnitte im ganzen Angusssystem vergrößern, damit der Druckverlust sinkt und die Fließfront gleichmäßig vorläuft.", "wirkung": "hoch", "art": "Werkzeug" },
+        { "massnahme": "Größere Düsenbohrung", "detail": "Maschinendüse mit größerem Durchmesser einsetzen; die Düse sollte nicht die engste Stelle sein.", "wirkung": "mittel", "art": "Maschine" },
+        { "massnahme": "Massetemperatur erhöhen", "detail": "Im oberen Teil des Verarbeitungsfensters fahren, die Schmelze fließt dann ruhiger.", "wirkung": "mittel", "art": "Prozess" },
+        { "massnahme": "Einspritzgeschwindigkeit variieren", "detail": "Mit einem Einspritzprofil testen, ob eine andere Geschwindigkeit die Streifen verringert.", "wirkung": "mittel", "art": "Prozess" },
+        { "massnahme": "Wanddicke prüfen", "detail": "Wenn möglich, die Wand im betroffenen Bereich dicker auslegen oder den Fließweg verkürzen.", "wirkung": "mittel", "art": "Konstruktion" }
+      ]
+    },
+    {
+      "id": "unaufgeschmolzenes-granulat",
+      "name": "Unaufgeschmolzenes Granulat",
+      "alias": [
+        "Ungeschmolzene Körner",
+        "Granulatkörner im Teil",
+        "Unmelts",
+        "Pickel"
+      ],
+      "kategorie": "Struktur & Festigkeit",
+      "beschreibung": "Einzelne Granulatkörner sind nicht vollständig aufgeschmolzen und im Teil eingebettet. Sie zeigen sich als Knubbel oder Pickel auf der Oberfläche, bei unverstärkten, hellen oder transparenten Typen auch als glasige, blasenähnliche Punkte. Meist in Anschnittnähe oder an dünnen Stellen.",
+      "annahme": "ANNAHME (noch nicht in der Praxis bestätigt): Aufgenommen, weil der Fehler in der App noch fehlte. Die Faustregel zur Dosierhub-Ausnutzung ist ein allgemeiner Erfahrungswert.",
+      "ursachen": [
+        "Zu wenig Wärme- oder Schereintrag beim Plastifizieren",
+        "Verweilzeit im Zylinder zu kurz (sehr kurzer Zyklus, großer Dosierhub)",
+        "Dosierhub zu groß für die Schnecke – Schnecke zu klein für das Schussgewicht",
+        "Staudruck zu niedrig",
+        "Schneckengeometrie passt nicht zum Material",
+        "Zylindertemperaturen im vorderen Bereich zu niedrig"
+      ],
+      "loesungen": [
+        { "massnahme": "Staudruck erhöhen", "detail": "Mehr Staudruck bringt mehr Scherwärme und durchmischt die Schmelze besser.", "wirkung": "hoch", "art": "Prozess" },
+        { "massnahme": "Temperaturprofil anpassen", "detail": "Statt stark ansteigendem Profil ein flacheres Profil fahren, damit das Granulat früher Wärme bekommt; Massetemperatur insgesamt leicht anheben.", "wirkung": "hoch", "art": "Prozess" },
+        { "massnahme": "Dosierhub prüfen", "detail": "Faustregel: Dosierhub etwa 1 bis 3 × Schneckendurchmesser. Bei mehr als ca. 3,5 D größere Schnecke bzw. Maschine wählen.", "wirkung": "hoch", "art": "Maschine" },
+        { "massnahme": "Granulat vorwärmen", "detail": "Vorgewärmtes Granulat (z. B. aus dem Trockner) schmilzt schneller auf.", "wirkung": "mittel", "art": "Material" },
+        { "massnahme": "Passende Schnecke einsetzen", "detail": "Schnecke mit Misch- oder Scherteil bzw. eine für den Werkstoff ausgelegte Geometrie verwenden.", "wirkung": "mittel", "art": "Maschine" }
+      ]
+    },
+    {
+      "id": "werkzeugbelag",
+      "name": "Werkzeugbelag / Formbelag",
+      "alias": [
+        "Formbelag",
+        "Plate-out",
+        "Ablagerungen im Werkzeug",
+        "Mould Deposit"
+      ],
+      "kategorie": "Verfärbung & Verunreinigung",
+      "beschreibung": "Auf der Kavitätsoberfläche, in der Trennebene oder in den Entlüftungen bildet sich nach und nach ein Belag. Er besteht aus Zersetzungsprodukten des Kunststoffs, ausgeschwitzten Additiven oder Flammschutzmitteln. Folgen: matte Stellen, schlechte Abformung, zugesetzte Entlüftung und daraus Brenner oder Füllmangel.",
+      "annahme": "ANNAHME (noch nicht in der Praxis bestätigt): Aufgenommen, weil der Fehler in der App noch fehlte. Reinigungsintervall hängt stark von Material und Werkzeug ab.",
+      "ursachen": [
+        "Massetemperatur zu hoch – Material zersetzt sich",
+        "Verweilzeit im Zylinder oder Heißkanal zu lang",
+        "Starke Scherung an engen Querschnitten",
+        "Einspritzgeschwindigkeit zu hoch, besonders am Ende der Füllung",
+        "Entlüftung unzureichend – Gase können nicht entweichen",
+        "Material nicht ausreichend getrocknet",
+        "Additive oder Flammschutzmittel neigen zum Ausschwitzen"
+      ],
+      "loesungen": [
+        { "massnahme": "Entlüftung verbessern", "detail": "Entlüftungen dort anbringen, wo die Fließfronten zusammenlaufen und am Fließende; zusätzlich über Auswerfer entlüften. Entlüftungen regelmäßig reinigen.", "wirkung": "hoch", "art": "Werkzeug" },
+        { "massnahme": "Massetemperatur prüfen und senken", "detail": "Echte Massetemperatur am Düsenaustritt mit Einstechthermometer messen und ins Verarbeitungsfenster laut Datenblatt bringen.", "wirkung": "hoch", "art": "Prozess" },
+        { "massnahme": "Verweilzeit verkürzen", "detail": "Kleinere Plastifiziereinheit wählen oder Zyklus straffen; im Heißkanal kleinere Querschnitte bzw. weniger Volumen.", "wirkung": "mittel", "art": "Maschine" },
+        { "massnahme": "Einspritzgeschwindigkeit am Füllende senken", "detail": "Einspritzprofil zum Ende hin abflachen, damit die Gase Zeit zum Entweichen haben.", "wirkung": "mittel", "art": "Prozess" },
+        { "massnahme": "Material trocknen", "detail": "Restfeuchte messen und nach Datenblatt trocknen.", "wirkung": "mittel", "art": "Material" },
+        { "massnahme": "Scherung reduzieren", "detail": "Anguss, Verteiler und Anschnitte auf zu enge Stellen prüfen und aufweiten; Düse mit größerer Bohrung.", "wirkung": "mittel", "art": "Werkzeug" },
+        { "massnahme": "Werkzeug regelmäßig reinigen", "detail": "Feste Reinigungsintervalle für Kavität und Entlüftungen festlegen. Bei hartnäckigen Belägen Materialhersteller nach belagsarmen Typen fragen.", "wirkung": "mittel", "art": "Werkzeug" }
       ]
     }
   ]

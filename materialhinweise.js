@@ -201,4 +201,22 @@ const MATERIALHINWEISE = {
     POM: { text: "Bei zu hoher Einzugstemperatur rutscht das Granulat. Einzugszone kühl halten, Staudruck moderat." },
     PP: { text: "Rutscht leicht in der Einzugszone (glattes Granulat). Einzugstemperatur anpassen, Staudruck leicht erhöhen.", typisch: true, annahme: true },
   },
+  "schubmarkierungen": {
+    PA: { text: "Bei glasfaserverstärktem PA möglich, meist durch zu kleinen Anschnitt. Anschnitt aufweiten und Massetemperatur im oberen Fenster." },
+    PC: { text: "Vor allem bei PC-Blends (PC/ABS, PC/PBT) bekannt. Angusssystem großzügig auslegen, Massetemperatur erhöhen, Einspritzgeschwindigkeit variieren.", typisch: true },
+    POM: { text: "Kann bei ungünstigen Verarbeitungsbedingungen auftreten. Düsenbohrung und Anschnitt prüfen, Werkzeugtemperatur nicht zu niedrig.", annahme: true },
+    PP: { text: "Bei gefülltem PP (Talkum) und PP-Blends typisch, z. B. bei Stoßfängern. Einspritzgeschwindigkeit variieren und Werkzeugtemperatur anpassen.", typisch: true, annahme: true },
+  },
+  "unaufgeschmolzenes-granulat": {
+    PA: { text: "Scharfer Schmelzpunkt: unterhalb davon bleiben Körner fest. Vordere Zonen ausreichend heiß, flaches Temperaturprofil, Staudruck erhöhen." },
+    PC: { text: "Bei transparentem PC als glasige Punkte sehr auffällig. Staudruck erhöhen, Dosierhub nicht zu groß wählen.", typisch: true },
+    POM: { text: "Bei großen Schussgewichten auf kleiner Schnecke möglich. Dosierhub prüfen, Staudruck moderat erhöhen, aber Verweilzeit im Blick behalten (Zersetzung).", annahme: true },
+    PP: { text: "Selten, eher bei sehr kurzen Zyklen und großem Dosierhub. Staudruck erhöhen, Einzugszone nicht zu kalt." },
+  },
+  "werkzeugbelag": {
+    PA: { text: "Beläge oft aus Oligomeren (Monomerreste) und Flammschutzmitteln. Massetemperatur nicht über Datenblatt, Entlüftungen regelmäßig reinigen.", typisch: true },
+    PC: { text: "Bei flammgeschützten Typen und PC-Blends möglich. Verweilzeit kurz halten, gut trocknen." },
+    POM: { text: "Sehr typisch: Formaldehyd-Beläge (weißer Belag) bei Überhitzung oder langer Verweilzeit. Massetemperatur senken, Entlüftung großzügig, Werkzeug regelmäßig reinigen.", typisch: true },
+    PP: { text: "Belag meist durch ausgeschwitzte Additive (Gleitmittel, Antistatika, Stabilisatoren). Additivierung mit dem Lieferanten klären.", annahme: true },
+  },
 };
