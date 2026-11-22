@@ -158,7 +158,7 @@ const MATERIALHINWEISE = {
     PP: { text: "Hohe Schwindung, stark abhängig von Nachdruck und Werkzeugtemperatur. Maße erst nach ca. 24 h prüfen.", typisch: true, annahme: true },
   },
 
-  // Einträge für die neuen Fehler aus PR #2 (werden angezeigt, sobald die Fehler in fehler.json stehen)
+  // Einträge für die 7 Fehler, die mit PR #2 dazugekommen sind
   "orangenhaut": {
     PA: { text: "Bei Glasfaser-PA kommt die Welligkeit oft von Fasern direkt unter der Oberfläche. Höhere Werkzeugtemperatur und schnellere Füllung helfen." },
     PC: { text: "Auf Hochglanzflächen sehr auffällig. Werkzeugtemperatur erhöhen, damit die Schmelze die Werkzeugoberfläche sauber abformt.", typisch: true },
